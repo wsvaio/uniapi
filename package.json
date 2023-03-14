@@ -1,6 +1,6 @@
 {
   "name": "@wsvaio/uniapi",
-  "version": "0.0.0-1",
+  "version": "0.0.0",
   "description": "以洋葱模型对uni.request的包装",
   "author": "wsvaio <wsvaio@qq.com>",
   "license": "MIT",
