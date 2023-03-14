@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "baseUrl": "./",
+    "paths": {
+      "@wsvaio/api": ["src/index.ts"],
+      "@/*": [
+        "example/*"
+      ]
+    },
+    "types": ["@dcloudio/types"]
+  }
+}
