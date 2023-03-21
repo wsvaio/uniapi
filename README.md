@@ -6,4 +6,4 @@
 
 </center>
 
-> [@wsvaio/api](https://www.npmjs.com/package/@wsvaio/uniapi) uniapp 版本，核心请求由 fetch 更换为 uni.request，使用请参考 [document...](https://www.npmjs.com/package/@wsvaio/uniapi)
+> [@wsvaio/api](https://www.npmjs.com/package/@wsvaio/api) uniapp 版本，核心请求由 fetch 更换为 uni.request，使用请参考 [document...](https://www.npmjs.com/package/@wsvaio/api)
