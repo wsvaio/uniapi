@@ -2,24 +2,21 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
     "moduleResolution": "node",
+    
     "esModuleInterop": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
+
     "noImplicitAny": false,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@wsvaio/api": ["src/index.ts"],
-      "@/*": [
-        "example/*"
-      ]
+      "@wsvaio/uniapi": ["package/index.ts"],
+      "@/*": ["src/*"]
     },
-    "types": ["@dcloudio/types"]
-  }
+    "types": ["vite/client", "@dcloudio/types"]
+  },
+  "vueCompilerOptions": {
+    "nativeTags": ["block", "component", "template", "slot"]
+  },
+  "exclude": ["dist", "node_modules"]
 }

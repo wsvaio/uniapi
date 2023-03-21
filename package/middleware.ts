@@ -8,7 +8,7 @@ import type {
   Middleware,
 } from "./types";
 
-export const befores: Middleware<BeforeContext>[] = [
+export const BEFORES: Middleware<BeforeContext>[] = [
   // 拼接请求url
   async (ctx) => {
     ctx.param ||= ctx.p;
@@ -36,10 +36,11 @@ export const befores: Middleware<BeforeContext>[] = [
   },
 ];
 
-export const core = async <T extends Context>(ctx: T) =>
+export const MIDDLE = async <T extends Context>(ctx: T) =>
   await new Promise((resolve) => {
     uni.request({
       ...ctx,
+      timeout: ctx.timeout || undefined,
       url: ctx.baseURL + ctx.url,
       data: ctx.body,
       success: data => (ctx.successResult = data),
@@ -48,12 +49,11 @@ export const core = async <T extends Context>(ctx: T) =>
     });
   });
 
-export const afters: Middleware<AfterContext>[] = [
+export const AFTERS: Middleware<AfterContext>[] = [
   // 检查返回结果
   async (ctx) => {
     if (ctx.failResult) throw new Error(ctx.failResult.errMsg);
     else if (!ctx.successResult) throw new Error("no result");
-    // @ts-ignore
     const { statusCode, errMsg: message, data } = ctx.successResult;
     const ok = statusCode >= 200 && statusCode <= 299;
     merge(ctx, { data, message, statusCode, ok });
@@ -61,7 +61,7 @@ export const afters: Middleware<AfterContext>[] = [
   },
 ];
 
-export const errors: Middleware<ErrorContext>[] = [
+export const ERRORS: Middleware<ErrorContext>[] = [
   async (ctx, next) => {
     ctx.message = ctx.error.message;
     await next();
@@ -69,7 +69,7 @@ export const errors: Middleware<ErrorContext>[] = [
   },
 ];
 
-export const finals: Middleware<FinalContext>[] = [
+export const FINALS: Middleware<FinalContext>[] = [
   async (ctx, next) => {
     await next();
     if (!ctx.log) return;
