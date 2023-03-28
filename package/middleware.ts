@@ -22,7 +22,7 @@ export const BEFORES: Middleware<BeforeContext>[] = [
       .map(item => item.substring(1, item.endsWith("?") ? item.length - 1 : item.length));
     for (const key of keys) {
       const val = ctx.param[key] || body[key] || "";
-      ctx.url = ctx.url.replace(new RegExp(`/:${key}\\?`, "g"), val ? `/${val}` : val);
+      ctx.url = ctx.url.replace(new RegExp(`/:${key}\\??`, "g"), val ? `/${val}` : val);
     }
 
     // query拼接
