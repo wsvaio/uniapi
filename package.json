@@ -52,7 +52,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@wsvaio/utils": "^0.0.17"
+    "@wsvaio/utils": "latest"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
