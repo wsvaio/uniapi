@@ -4,7 +4,7 @@ import { test } from "@/apis";
 
 <template>
   <view>
-    <button @click="test({ config: true })({})">
+    <button @click="test({ config: true, body: { a: 1 } })({})">
       发送请求
     </button>
   </view>

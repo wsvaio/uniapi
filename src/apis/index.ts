@@ -1,2 +1,2 @@
-import { get } from "./request";
-export const test = get("/test/:id?");
+import { post } from "./request";
+export const test = post("/test/:id?");

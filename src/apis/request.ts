@@ -1,6 +1,6 @@
 import { createAPI } from "@wsvaio/uniapi";
 
-export const { get, use } = createAPI({
+export const { get, use, post } = createAPI({
   baseURL: "/api",
   log: true,
 });
