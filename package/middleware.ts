@@ -16,7 +16,7 @@ export const BEFORES: Middleware<BeforeContext>[] = [
     ctx.body ||= ctx.b;
     // param拼接
     const body = is("Object")(ctx.body) ? ctx.body : {};
-    ctx.url.match(/:[\w_][\w\d_]*\??/gims).forEach((matched) => {
+    ctx.url.match(/:[\w_][\w\d_]*\??/gims)?.forEach((matched) => {
       const key = matched.slice(1, matched.length - (matched.endsWith("?") ? 1 : 0));
       const val = ctx.param[key] || body[key] || "";
       if (!val && !matched.endsWith("?")) return;
