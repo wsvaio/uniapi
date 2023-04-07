@@ -64,7 +64,7 @@ export const ERRORS: Middleware<ErrorContext>[] = [
   async (ctx, next) => {
     ctx.message = ctx.error.message;
     await next();
-    throw ctx.error;
+    if (ctx.error) throw ctx;
   },
 ];
 
