@@ -16,13 +16,13 @@ export const BEFORES: Middleware<BeforeContext>[] = [
     ctx.body ||= ctx.b;
     // param拼接
     const body = is("Object")(ctx.body) ? ctx.body : {};
-    ctx.url.match(/:[\w_][\w\d_]*\??/gims)?.forEach((matched) => {
+    ctx.url.match(/:[\w_][\w\d_]*\??/img)?.forEach((matched) => {
       const key = matched.slice(1, matched.length - (matched.endsWith("?") ? 1 : 0));
       const val = ctx.param[key] || body[key] || "";
       if (!val && !matched.endsWith("?")) return;
       ctx.url = ctx.url.replace(matched, val);
     });
-    ctx.url = ctx.url.replace(/\/+/imgs, "/");
+    ctx.url = ctx.url.replace(/\/+/img, "/");
 
     // query拼接
     ctx.url += ctx.url.includes("?") ? "&" : "?";
