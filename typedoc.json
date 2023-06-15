@@ -1,0 +1,5 @@
+{
+	"entryPoints": ["package/index.ts"],
+	"excludeExternals": true,
+	"out": "./docs"
+}

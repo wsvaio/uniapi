@@ -4,7 +4,7 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "node",
-    
+
     "esModuleInterop": true,
 
     "noImplicitAny": false,
@@ -18,5 +18,6 @@
   "vueCompilerOptions": {
     "nativeTags": ["block", "component", "template", "slot"]
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
+	"include": ["package/**/*.ts"]
 }
