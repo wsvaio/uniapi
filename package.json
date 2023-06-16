@@ -1,7 +1,7 @@
 {
   "name": "@wsvaio/uniapi",
   "version": "1.0.5",
-  "description": "一个让你轻松使用 uni.request 的封装库，支持前后置中间件、错误拦截、最终（finally）中间件、派生配置、柯里化配置等",
+  "description": "一个使用 TypeScript 编写，基于 uniapp 的网络请求库，主要用于处理 HTTP 请求",
   "author": "wsvaio <wsvaio@qq.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/wsvaio",
@@ -42,7 +42,8 @@
   },
   "scripts": {
     "dev": "uni",
-    "commit": "czg",
+    "commit": "pnpm docs:build && git add docs && czg",
+    "docs:build": "pnpm typedoc",
     "build": "tsup",
     "prepublishOnly": "pnpm build",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
