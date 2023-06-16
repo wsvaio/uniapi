@@ -12,7 +12,7 @@
 
 ## 特性
 
-- ✨ 基于 fetch 的现代网络请求库
+- ✨ 基于 uniapp 的现代网络请求库
 - 🎉 使用 TypeScript 编写，提供类型支持
 - 🎨 支持请求中间件，方便扩展功能
 - 🎇 提供创建 API、设置全局上下文、执行请求等功能
@@ -25,7 +25,7 @@
 
 ## API
 
-[document……](https://wsvaio.github.io/api/modules.html)
+[document……](https://wsvaio.github.io/uniapp/modules.html)
 
 ## 安装
 
