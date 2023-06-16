@@ -25,7 +25,7 @@
 
 ## API
 
-[document……](https://wsvaio.github.io/uniapp/modules.html)
+[document……](https://wsvaio.github.io/uniapi/modules.html)
 
 ## 安装
 
