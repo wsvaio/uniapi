@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { test } from "@/apis";
 
-const handleClick = () => {
-	test({ config: true, body: { a: 1 } })({}).catch(err => {
-		console.log(err);
-	});
-};
+const handleClick = () =>
+	test({ body: { a: 1 }, q: { id: 1 } });
 </script>
 
 <template>

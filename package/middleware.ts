@@ -1,14 +1,7 @@
 import { dateFormat, is, merge } from "@wsvaio/utils";
-import type {
-	AfterContext,
-	BeforeContext,
-	Context,
-	ErrorContext,
-	FinalContext,
-	Middleware,
-} from "./types";
+import type { Context, Middleware } from "./types";
 
-export const BEFORES: Middleware<BeforeContext>[] = [
+export const BEFORES: Middleware<Context>[] = [
 	// 拼接请求url
 	async ctx => {
 		ctx.param ||= ctx.p;
@@ -16,27 +9,27 @@ export const BEFORES: Middleware<BeforeContext>[] = [
 		ctx.body ||= ctx.b;
 		// param拼接
 		const body = is("Object")(ctx.body) ? ctx.body : {};
-		ctx.url.match(/:[\w_][\w\d_]*\??/img)?.forEach(matched => {
+		ctx.url.match(/:[\w_][\w\d_]*\??/gim)?.forEach(matched => {
 			const key = matched.slice(1, matched.length - (matched.endsWith("?") ? 1 : 0));
 			const val = ctx.param[key] || body[key] || "";
 			if (!val && !matched.endsWith("?")) return;
 			ctx.url = ctx.url.replace(matched, val);
 		});
-		ctx.url = ctx.url.replace(/\/+/img, "/");
+		ctx.url = ctx.url.replace(/\/+/gim, "/");
 
 		// query拼接
 		ctx.url += ctx.url.includes("?") ? "&" : "?";
 		Object.entries(ctx.query).forEach(([k, v]) =>
 			Array.isArray(v)
 				? v.forEach(item => (ctx.url += `${k}=${item}&`))
-				: (![null, undefined, ""].includes(v) && (ctx.url += `${k}=${v}&`)),
+				: ![null, undefined, ""].includes(v) && (ctx.url += `${k}=${v}&`)
 		);
 		ctx.url = ctx.url.substring(0, ctx.url.length - 1);
 	},
 ];
 
 export const MIDDLE = async <T extends Context>(ctx: T) =>
-	ctx.response = await new Promise(resolve => {
+	(ctx.response = await new Promise(resolve => {
 		uni.request({
 			...ctx,
 			timeout: ctx.timeout || undefined,
@@ -44,9 +37,9 @@ export const MIDDLE = async <T extends Context>(ctx: T) =>
 			data: ctx.body,
 			complete: resolve,
 		});
-	});
+	}));
 
-export const AFTERS: Middleware<AfterContext>[] = [
+export const AFTERS: Middleware<Context>[] = [
 	// 检查返回结果
 	async ctx => {
 		const { statusCode, errMsg: message, data } = ctx.response;
@@ -56,7 +49,7 @@ export const AFTERS: Middleware<AfterContext>[] = [
 	},
 ];
 
-export const ERRORS: Middleware<ErrorContext>[] = [
+export const ERRORS: Middleware<Context>[] = [
 	async (ctx, next) => {
 		ctx.message = ctx.error.message;
 		await next();
@@ -64,17 +57,15 @@ export const ERRORS: Middleware<ErrorContext>[] = [
 	},
 ];
 
-export const FINALS: Middleware<FinalContext>[] = [
+export const FINALS: Middleware<Context>[] = [
 	async (ctx, next) => {
 		await next();
 		if (!ctx.log) return;
-		const status = ctx.statusCode
-			? `${ctx.statusCode} ${ctx.message}`
-			: `${ctx.message}`;
+		const status = ctx.statusCode ? `${ctx.statusCode} ${ctx.message}` : `${ctx.message}`;
 		const Params = Object.setPrototypeOf({}, new function params() {}());
 		const Result = Object.setPrototypeOf({}, new function result() {}());
 		const Context = Object.setPrototypeOf({}, new function context() {}());
-		merge(Params, is("Object")(ctx.body) ? (ctx.body as Object) : { body: ctx.body });
+		merge(Params, is("Object")(ctx.body) ? ctx.body : { body: ctx.body });
 		merge(Result, is("Object")(ctx.data) ? ctx.data : { data: ctx.data });
 		merge(Context, ctx);
 		console.groupCollapsed(
@@ -84,7 +75,7 @@ export const FINALS: Middleware<FinalContext>[] = [
 			"font-size: 16px; font-weight: 100; color: white; background: #409EFF;",
 			`font-size: 16px; font-weight: 100; color: white; background: ${
 				ctx.ok ? "#67C23A" : "#F56C6C"
-			}; border-radius: 0 3px 3px 0;`,
+			}; border-radius: 0 3px 3px 0;`
 		);
 		console.log(Params);
 		console.log(Result);

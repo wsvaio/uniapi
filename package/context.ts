@@ -1,59 +1,42 @@
 import { merge, omit } from "@wsvaio/utils";
-import type { Context, MiddlewareContext } from "./types";
+import type { Context } from "./types.d";
 
-const CONTEXT: Context = {};
-
-/**
- * 合并两个上下文对象
- * @param context1 第一个上下文对象
- * @param context2 第二个上下文对象
- * @returns 合并后的上下文对象
- */
-export const mergeContext = (context1: Record<any, any>, context2: Record<any, any>) => {
-	const keys: (keyof MiddlewareContext)[] = ["befores", "afters", "errors", "finals"];
-
+export const mergeContext = (context: Context, ...contexts: Context[]) => {
+	const keys = ["befores", "afters", "errors", "finals"];
 	keys.forEach(key => {
-		!Array.isArray(context1[key]) && (context1[key] = []);
-		Array.isArray(context2[key]) && context1[key].push(...context2[key]);
+		!Array.isArray(context[key]) && (context[key] = []);
+		contexts
+			.filter(item => !!item)
+			.forEach(item => {
+				Array.isArray(item[key]) && context[key].push(...item[key]);
+				merge(context, omit(item, [...keys]), {
+					deep: Number.POSITIVE_INFINITY,
+				});
+			});
 	});
-
-	return merge(context1, omit(context2, keys), {
-		deep: Infinity,
-	});
+	return context;
 };
-/**
- * 创建默认上下文对象
- * @returns 默认上下文对象
- */
-export const createContext = (): Context =>
-	mergeContext(
-		{
-			method: "GET",
-			header: {},
-			log: false,
-			timeout: 0,
-			url: "/",
-			baseURL: "",
 
-			b: {},
-			q: {},
-			p: {},
+export const createContext = (): Context => ({
+	method: "GET",
+	headers: {},
+	log: false,
+	timeout: 0,
+	url: "/",
+	baseURL: "",
 
-			query: null,
-			body: null,
-			param: null,
+	b: {},
+	q: {},
+	p: {},
 
-			befores: [],
-			afters: [],
-			errors: [],
-			finals: [],
+	query: null,
+	body: null,
+	param: null,
 
-			message: "",
-		},
-		CONTEXT
-	);
-/**
- * 设置全局上下文对象
- * @param config 要设置的上下文对象
- */
-export const setGlobalContext = <C extends object = {}>(config: Context<C>) => mergeContext(CONTEXT, config);
+	befores: [],
+	afters: [],
+	errors: [],
+	finals: [],
+
+	message: "",
+});
