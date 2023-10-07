@@ -52,6 +52,8 @@ export const AFTERS: Middleware<Context>[] = [
 export const ERRORS: Middleware<Context>[] = [
 	async (ctx, next) => {
 		ctx.message = ctx.error.message;
+		// 如果报错则设为不正常
+		ctx.normal = false;
 		await next();
 		if (ctx.error) throw ctx;
 	},
