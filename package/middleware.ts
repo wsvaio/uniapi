@@ -55,7 +55,10 @@ export const ERRORS: Middleware<Context>[] = [
 		// 如果报错则设为不正常
 		ctx.normal = false;
 		await next();
-		if (ctx.error) throw ctx;
+		// 如果错误中间件处理完后依然不正常，则自动抛出异常
+		if (!ctx.normal) throw ctx;
+		else delete ctx.error;
+
 	},
 ];
 

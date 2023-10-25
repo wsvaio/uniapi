@@ -53,7 +53,7 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "@wsvaio/utils": "^1.0.17"
+    "@wsvaio/utils": "^1.0.18"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
@@ -67,8 +67,8 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3080520230612002",
     "@types/node": "^20.3.1",
     "@vue/tsconfig": "^0.4.0",
-    "@wsvaio/commitlint-config": "^0.0.6",
-    "@wsvaio/eslint-config": "^0.0.6",
+    "@wsvaio/commitlint-config": "^0.0.7",
+    "@wsvaio/eslint-config": "^0.0.7",
     "czg": "^1.6.1",
     "eslint": "^8.42.0",
     "less": "^4.1.3",
